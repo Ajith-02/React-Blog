@@ -5,33 +5,22 @@ import Register from "./pages/register/Register";
 import Settings from "./pages/settings/Settings";
 import Single from "./pages/single/Single";
 import Write from "./pages/write/Write";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+
 
 function App() {
   const currentUser = false;
   return (
     <Router>
       <Topbar />
-      <Switch>
-        <Route exact path="/">
-          <Home />
-        </Route>
-        <Route path="/register" ><Register />
-         {currentUser ? <Home /> : <Register />} 
-        </Route>
-        <Route path="/login">
-         {currentUser ? <Home /> : <Login />} 
-        </Route>
-        <Route path="/write">
-         {currentUser ? <Write /> : <Register />} 
-        </Route>
-        <Route path="/settings">
-        {currentUser ? <Settings /> : <Register />}  
-        </Route>
-        <Route path="/post/:postId">
-          <Single /> 
-         </Route>
-      </Switch>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/register" element={currentUser ? <Home /> : <Register />} />
+        <Route path="/login" element={currentUser ? <Home /> : <Login />} />
+        <Route path="/settings" element={currentUser ? <Settings /> : <Register />} />
+        <Route path="/write" element={currentUser ? <Write /> : <Register />} />
+        <Route path="/post/:postId" element={<Single />} />
+      </Routes>
     </Router>
   );
 }
